@@ -10,6 +10,9 @@ import {
 import Login from '../components/Login.jsx'
 import Signup from '../components/Signup.jsx'
 import Dashboard from '../components/Dashboard.jsx'
+import TopicsContainer from "../components/TopicsContainer";
+import SubmissionForm from "../components/SubmissionForm";
+import Card from "../components/Card";
 
 function App() {
   return (
@@ -19,6 +22,8 @@ function App() {
         </header>
       <div id="main_container">
         <Switch>
+          <Route exact path="/card" component={Card} />
+          <Route exact path="/topics" component={TopicsContainer} /> 
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/signup" component={Signup} />
           <Route path="/" component={Login} />
@@ -28,4 +33,4 @@ function App() {
   )
 }
 
-export default App
+export default App;

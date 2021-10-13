@@ -5,6 +5,8 @@ const userController = {};
 
 userController.signup = (req, res, next) => {
   // deconstruct username, password, email and userid from req.body
+  console.log("REQ PARAMS IS: ", req.params);
+  console.log("req body is: ", req.body);
   const { username, password, email } = req.body;
   const userId = uuidv4();
 
