@@ -4,7 +4,12 @@ const cookieParser = require('cookie-parser');
 const fetch = require('node-fetch');
 require('dotenv').config();
 
-const userControllers = require('./controllers/userControllers.js');
+// controller import
+const userController = require('./controllers/userController');
+const sessionController = require('./controllers/sessionController');
+const categoryController = require('./controllers/categoryController');
+const topicController = require('./controllers/topicController');
+
 
 const app = express();
 const PORT = 3000;
@@ -15,9 +20,42 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // routers
-app.post('/api/signup/', userControllers.signup, (req, res) => {
-  return res.status(200).json({});
-});
+app.post('/api/signup',
+  userController.signup,
+  sessionController.createSession,
+  (req, res) => {
+    return res.status(200).json(res.locals);
+  });
+
+app.post('/api/login', 
+  userController.verifyUser,  
+  sessionController.createSession,
+  (req, res) => {
+    return res.status(200).json(res.locals);
+  });
+
+app.post('/api/categories', 
+  categoryController.createCategory,
+  (req, res) => {
+    return res.status(200).json(res.locals);
+  });
+
+// app.get('/api/topics',
+//   topicController.getAllTopics,
+//   (req, res) => {
+//     return res.status(200).json(res.locals);
+//   });
+
+// app.post('/api/topics',
+//   topicController.createTopic,
+//   (req, res) => {
+//     return res.status(200).json(res.locals);
+//   });
+
+// app.post('/api/note',
+//   (req, res) => {
+//     return res.status(200).json(res.locals);
+//   });
 
 // serve static pages
 app.use(express.static(path.resolve(__dirname, '../client')));
