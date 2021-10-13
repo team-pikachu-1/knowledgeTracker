@@ -1,19 +1,21 @@
 import React from 'react';
 import ReactDom from 'react-dom';
-// import { Switch, Route, BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 // IMPORTING COMPONENTS
 import CategoriesContainer from "./CategoriesContainer";
-// import SubmissionForm from "./SubmissionForm";
+import TopicsContainer from "./TopicsContainer";
+import SubmissionForm from "./SubmissionForm";
 
 function Dashboard() {
   return (
-    <div>
-      <h1> hello there </h1>
-      <CategoriesContainer />
-      {/* <SubmissionForm /> */}
-    </div>
+    // <Router>
+      <div>
+        <h3> hello there </h3>
+        <CategoriesContainer />
+        <SubmissionForm />
+      </div>
   )
 }
 
-export default Dashboard
+export default Dashboard;

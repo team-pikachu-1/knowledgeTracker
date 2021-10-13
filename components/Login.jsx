@@ -8,12 +8,12 @@ class Login extends React.Component {
     return (
         <div>
             <div id="login_container">
-              <form id="logIn" action="/dashboard" method="GET">
+            <form id="login" action="/dashboard" method="GET">
                   <label for="username">Username</label><br />
-                  <input type="text" id="username"></input><br />
+                  <input type="text" id="username" name="username"></input><br />
                   <label for="password">Password</label><br />
-                  <input type="text" id="password"></input><br />
-                  <button id="login_button" type="submit">Log In</button>
+                  <input type="password" id="password" name="password"></input><br />
+                  <button id="login_button" type="submit" >Log In</button>
               </form>
               <Link to="/signup">Click here to sign up</Link>
             </div>
