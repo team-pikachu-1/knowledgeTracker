@@ -2,7 +2,8 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: path.resolve(__dirname, './src/index.js'),
+  entry: './src/index.js',
+  // mode: process.env.NODE_ENV,
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.bundle.js',
@@ -14,16 +15,16 @@ module.exports = {
       publicPath: '/',
     },
     compress: true,
+    headers: { 'Access-Control-Allow-Origin': '*'},
     hot: true,
     historyApiFallback: true,
     host: 'localhost',
     port: 8080,
     proxy: {
-      '/': {
-        target: 'http://localhost:3000',
+      '/api/**': {
+        target: 'http://localhost:3000/',
         secure: false,
-        changeOrigin: false,
-      }
+      },
     }
   },
   module: {
