@@ -89,11 +89,15 @@ const userReducer = (state = initialState, action) => {
                 notes: [],
             }
         }
-        const makeNewCategories = (oldCategories, id) => {
+        const addNewTopicToCategories = (oldCategories, categoryId, topic) => {
             const categories = [...oldCategories];
-            for (let i = 0; i < newArray.length; i = i + 1) {
-                if (categories[i].uuid === id) {
-                    categories[i].topics = [...categories[i].topics, makeNewTopic(newTopic)];
+            for (let i = 0; i < categories.length; i = i + 1) {
+                if (categories[i].uuid === categoryId) {
+                    if (categories[i].topics === undefined) {
+                        categories[i].topics = [makeNewTopic(topic)];
+                    } else {
+                        categories[i].topics = [...categories[i].topics, makeNewTopic(topic)];
+                    }
                 }
             }
             return categories;
@@ -103,7 +107,46 @@ const userReducer = (state = initialState, action) => {
         const topicCategoryId = action.payload.categoryID;
 
         //make a new categories array with all the same stuff, but replace the matching object with a new obj
-        const newCategories = makeNewCategories(state.categories, topicCategoryId);
+        const newCategories = addNewTopicToCategories(state.categories, topicCategoryId, newTopic);
+
+        return {
+            ...state,
+            categories: newCategories,
+        };
+    };
+
+    if (action.type === actionType.add_note) {
+        const newNote = {
+            uuid: undefined,
+            note: action.payload.note,
+        }
+        const categoryId = action.payload.categoryId;
+        const topicId = action.payload.topicId;
+        //add note to topics array
+            //find category in categories array, find topic in topics array, then find note array and add note
+        //make new categories array, reassign categories
+        const addNewNoteToCategories = (oldCategories, categoryId, topicId) => {
+            const categories = [...oldCategories];
+            for (let i = 0; i < newArray.length; i = i + 1) {
+                if (categories[i].uuid === categoryId) {
+                    //if you find a category with a matching ID, loop tru topics
+                    const topics = categories[i].topics;
+                    for (let topicIndex = 0; topicIndex < topics.length; topicIndex = topicIndex + 1) {
+                        if (topics[topicIndex].uuid === topicId) {
+                            //if you find a matching topic ID, add note
+                            if (topics[topicIndex].note === undefined) {
+                                categories[i].topics[topicIndex].note = [newNote];
+                            } else {
+                                categories[i].topics[topicIndex].note = [...categories[i].topics[topicIndex].note, newNote];
+                            }
+                        }
+                    }
+                }
+            }
+            return categories;
+        };
+
+        const newCategories = addNewNoteToCategories(state.categories, categoryId, topicId);
 
         return {
             ...state,

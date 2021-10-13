@@ -2,6 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import App from './App';
 import './App.css';
+import store from '../redux/store';
 
 // ReactDOM.render(
 //   <App> <div>Hello webpack</div> </App>,
@@ -9,8 +10,8 @@ import './App.css';
 // );
 
 render(
-  <App />,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('app')
-);
-
-console.log('omg its working'); 
+); 

@@ -18,7 +18,11 @@ export const addTopicActionCreator = (title, categoryId) => ({
     }
 });
 
-export const addNoteActionCreator = note => ({
+export const addNoteActionCreator = (note, categoryId, topicId) => ({
     type: actionTypes.add_note,
-    payload: note,
-});
+    payload: {
+        note: note,
+        categoryId: categoryId,
+        topicId: topicId
+}}
+);
