@@ -29,7 +29,8 @@ app.post('/api/signup',
 
 app.post('/api/login', 
   userController.verifyUser,  
-  sessionController.createSession,
+  // sessionController.createSession,
+  userController.generateData,
   (req, res) => {
     return res.status(200).json(res.locals);
   });
@@ -46,11 +47,17 @@ app.post('/api/categories',
 //     return res.status(200).json(res.locals);
 //   });
 
-// app.post('/api/topics',
-//   topicController.createTopic,
-//   (req, res) => {
-//     return res.status(200).json(res.locals);
-//   });
+app.post('/api/topics',
+  topicController.createTopic,
+  (req, res) => {
+    return res.status(200).json(res.locals);
+  });
+
+app.patch('/api/topics', 
+  topicController.updateTopic,
+  (req, res) => {
+    return res.status(200).json(res.locals);
+  });
 
 // app.post('/api/note',
 //   (req, res) => {

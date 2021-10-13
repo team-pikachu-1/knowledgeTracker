@@ -19,7 +19,6 @@ categoryController.getAllCategories = (req, res, next) => {
 }
 
 categoryController.createCategory = async (req, res, next) => {
-  console.log('enter categoryController.createCategory');
   // deconstruct category name and username from req.body
   const { categoryName, userId } = req.body;
   const categoryId = uuidv4();
@@ -28,10 +27,9 @@ categoryController.createCategory = async (req, res, next) => {
   const newCat = await Categories.create({
     uuid: categoryId,
     title: categoryName,
-    notes: [],
+    topics: [],
   })
     .then(response => {
-      console.log('response -> newCat: ', response);
       return response;
     })
     .catch(error => {
@@ -45,21 +43,19 @@ categoryController.createCategory = async (req, res, next) => {
   const user = await Users.findOneAndUpdate( 
     { uuid: userId }, 
     { $push: {
-        categories: { ...newCat }
+        categories: newCat
       }
     },
     { new: true }
   )
     .then(response => {
-      // res.locals.newCat = newCat;
-      res.locals = response;
+      res.locals.newCat = newCat;
       return next();
     })
     .catch(error => next({
       log: error,
       message: { err: `categoryController.create ERR 2: ${error}` },
     }));
-
 };
 
 module.exports = categoryController;

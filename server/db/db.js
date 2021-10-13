@@ -15,6 +15,28 @@ mongoose.connect(MONGO_URI, {
 
 const Schema = mongoose.Schema;
 
+const topicSchema = new Schema({
+  uuid: String,
+  title: String,
+  isReady: {
+    type: Boolean,
+    default: false
+  },
+  notes: [{
+    noteId: String,
+    description: String
+  }]
+});
+
+const categorySchema = new Schema({
+  uuid: String,
+  title: String,
+  topics: [{
+    type: topicSchema,
+    ref: 'topic'
+  }]
+});
+
 // sets a schema for the 'User' collection
 const userSchema = new Schema({
   uuid: String,
@@ -22,8 +44,7 @@ const userSchema = new Schema({
   password: String,
   email: String,
   categories: [{
-    // type of ObjectId makes this behave like a foreign key referencing the 'category' collection
-    type: Schema.Types.ObjectId,
+    type: categorySchema,
     ref: 'category'
   }]
 });
@@ -50,22 +71,6 @@ userSchema.methods.comparePassword = function(candidatePassword, cb) {
     })
     .catch(err => cb(err));
 };
-
-const categorySchema = new Schema({
-  uuid: String,
-  title: String,
-  topics: [{
-    type: Schema.Types.ObjectId,
-    ref: 'topic'
-  }]
-});
-
-const topicSchema = new Schema({
-  uuid: String,
-  title: String,
-  isReady: Boolean,
-  notes: [{ text: String }]
-});
 
 const sessionSchema = new Schema({
   cookieId: { type: String, required: true, unique: true },
