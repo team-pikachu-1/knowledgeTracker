@@ -3,6 +3,7 @@ import ReactDom from 'react-dom';
 import { Link } from 'react-router-dom'
 
 class Login extends React.Component {
+  // event handler 
   render() {
     return (
         <div>
