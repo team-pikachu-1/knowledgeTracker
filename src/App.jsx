@@ -9,6 +9,7 @@ import {
 // IMPORTING COMPONENTS
 import Login from '../components/Login.jsx'
 import Signup from '../components/Signup.jsx'
+import Dashboard from '../components/Dashboard.jsx'
 
 function App() {
   return (
@@ -18,11 +19,9 @@ function App() {
         </header>
       <div id="main_container">
         <Switch>
+          <Route path="/dashboard" component={Dashboard} />
           <Route path="/signup" component={Signup} />
-          <Route path="/">
-            <Login />
-            <Link to="/signup">Click here to sign up</Link>
-          </Route>
+          <Route path="/" component={Login} />
         </Switch>
       </div>
     </Router>
