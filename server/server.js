@@ -29,9 +29,10 @@ app.post('/api/signup',
 
 app.post('/api/login', 
   userController.verifyUser,  
-  // sessionController.createSession,
-  userController.generateData,
+  sessionController.createSession,
+  // userController.generateData,
   (req, res) => {
+    // console.log('res.locals /api/login: ', res.locals);
     return res.status(200).json(res.locals);
   });
 

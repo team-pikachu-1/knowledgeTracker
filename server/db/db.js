@@ -32,7 +32,7 @@ const categorySchema = new Schema({
   uuid: String,
   title: String,
   topics: [{
-    type: topicSchema,
+    type: Schema.Types.ObjectId,
     ref: 'topic'
   }]
 });
@@ -45,7 +45,7 @@ const userSchema = new Schema({
   email: String,
   categories: [{
     type: categorySchema,
-    ref: 'category'
+    ref: 'categories'
   }]
 });
 

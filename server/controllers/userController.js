@@ -72,18 +72,31 @@ userController.generateData = (req, res, next) => {
   Users.findOne({ username: res.locals.username })
     .then(user => {
       // console.log('user inside generateData: ', user);
+      res.locals.user = user;
       // for each category, query db for topics data
       for (let i = 0; i < user.categories.length; i++) {
         Categories.find({ uuid: user.categories[i].uuid })
         .then(category => {
-          // do something to get topic data?
+          res.locals.category = [...res.locals.category, category];
           console.log('category:\n', category);
-          return next();
+          // for each topic, query db for entire topic document (including notes array)
+          for (let j = 0; j < category.length; j++) {
+            Topics.find({ _id: category[j]._id })
+              .then(topics => {
+                res.locals.topics = [...res.locals.topics, topics];
+                console.log('topics inside generateDate:\n', topics);
+                return next();
+              })
+              .catch(error => next({
+                log: error,
+                message: { err: `generate data ERR in topics: ${error}` },
+              }));
+          }
         })
         .catch(error => {
           return next({
             log: error,
-            message: { err: `generate data ERR in topics: ${error}` },
+            message: { err: `generate data ERR in categories: ${error}` },
           })
         });
       }
