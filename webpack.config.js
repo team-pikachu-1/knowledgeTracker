@@ -21,11 +21,6 @@ module.exports = {
     host: 'localhost',
     port: 8080,
     proxy: {
-      '/': {
-        target: 'http://localhost:3000',
-        secure: false,
-        changeOrigin: false,
-      },
       '/api/**': {
         target: 'http://localhost:3000/',
         secure: false,
